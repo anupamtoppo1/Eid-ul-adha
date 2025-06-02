@@ -1,92 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eid ul Adha Mubarak!</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@700&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic Tac Toe</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #333;
+    }
+    h1 {
+      margin: 20px 0;
+      color: #444;
+      text-shadow: 1px 1px #fff;
+    }
+    .mode-select {
+      margin: 20px 0;
+    }
+    .mode-select button {
+      margin: 10px;
+      padding: 12px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #6a11cb;
+      background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+    .mode-select button:hover {
+      transform: scale(1.05);
+    }
+    #start-btn {
+      position: fixed;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 35px;
+      font-size: 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      display: none;
+      cursor: pointer;
+      z-index: 10000;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin: 40px auto;
+      display: none;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #fff3cd;
+      font-size: 40px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid #ffc107;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cell:hover {
+      background-color: #ffe8a1;
+    }
+    .cell.x {
+      color: #007bff;
+    }
+    .cell.o {
+      color: #dc3545;
+    }
+    .result {
+      font-size: 26px;
+      font-weight: bold;
+      margin-top: 20px;
+      background: #17a2b8;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: none;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #restart-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 18px;
+      background: #6610f2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      display: none;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 400px) {
+      #board {
+        grid-template-columns: repeat(3, 80px);
+      }
+      .cell {
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="floral-border-top-left"></div>
-    <div class="floral-border-top-right"></div>
+  <h1>Tic Tac Toe</h1>
+  <div class="mode-select">
+    <button onclick="selectMode('friend')">Play with Friend</button>
+    <button onclick="selectMode('computer')">Play with Computer</button>
+  </div>
+  <button id="start-btn" onclick="startGame()">Start Game</button>
+  <div id="board"></div>
+  <div class="result" id="result"></div>
+  <button id="restart-btn" onclick="restartGame()">Restart</button>
 
-    <div class="container">
-        <header>
-            <h1 class="user-name-3d" id="headerUserName">ANUPAM TOPPO</h1>
-            <h2 class="hindi-subheading"><span id="subheadingUserName">अनूपम टोप्पो</span> की तरफ से आप को ईद उल अजहा की बहुत बहुत शुभकामनाएँ</h2>
-        </header>
+  <script>
+    let currentPlayer = "X";
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let mode = "";
+    let isGameOver = false;
 
-        <section class="date-section">
-            <p><strong>आज की तारीख 👉 <span id="currentDate"></span></strong></p>
-        </section>
+    function selectMode(selectedMode) {
+      mode = selectedMode;
+      document.getElementById("start-btn").style.display = "block";
+    }
 
-        <main>
-            <div class="eid-gif-container">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2t1dDRiYjV2MXZ1bHUxZ2NnNmNkbjBnMnc3OHQ0NXFsdGhzcG1sayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LStqRxbS07T3sfIccP/giphy.gif" alt="Eid Mubarak Animation" class="eid-gif">
-            </div>
+    function startGame() {
+      document.getElementById("board").style.display = "grid";
+      document.getElementById("start-btn").style.display = "none";
+      document.querySelector(".mode-select").style.display = "none";
+ 
+      createBoard();
+    }
 
-            <div class="greeting-card">
-                <div class="greeting-content">
-                    <p class="eid-greeting-main">🌙 ईद मुबारक!</p>
-                    <p class="eid-message">अल्लाह आपके जीवन को खुशियों और अमन से भर दे।</p>
-                    <p class="eid-signature">— <span id="signatureUserName">अनूपम टोप्पो</span></p>
-                </div>
-            </div>
+    function createBoard() {
+      const boardDiv = document.getElementById("board");
+      boardDiv.innerHTML = "";
+      board = ["", "", "", "", "", "", "", "", ""];
+      isGameOver = false;
+      currentPlayer = "X";
+      document.getElementById("result").style.display = "none";
+      document.getElementById("restart-btn").style.display = "none";
 
-            <section class="cta-section">
-                <p class="hindi-cta">आपका दिन मुबारक हो 😊</p>
-            </section>
-        </main> <!-- End of main content -->
+      board.forEach((_, i) => {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.dataset.index = i;
+        cell.addEventListener("click", handleCellClick);
+        boardDiv.appendChild(cell);
+      });
+    }
 
-        <!-- Adsterra Ad Slot START -->
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '639ddb0c9a01414b330a9b9e2f04adb1',
-                    'format' : 'iframe',
-                    'height' : 600,
-                    'width' : 160,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/639ddb0c9a01414b330a9b9e2f04adb1/invoke.js"></script>
-        </div>
-        <!-- Adsterra Ad Slot END -->
+    function handleCellClick(e) {
+      const index = e.target.dataset.index;
+      if (board[index] !== "" || isGameOver) return;
 
-        <footer>
-            <div class="music-player">
-                <audio id="eidMusic" loop>
-                    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_155b362998.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-                <button id="musicToggleBtn"><i class="fas fa-play"></i></button>
-                <span>Soft Spiritual Instrumental</span>
-            </div>
+      board[index] = currentPlayer;
+      e.target.textContent = currentPlayer;
+      e.target.classList.add(currentPlayer.toLowerCase());
 
-            <button id="shareButton" class="share-button">शेयर करें / Send</button>
-        </footer>
-    </div>
+      if (checkWinner(currentPlayer)) {
+        endGame(`${currentPlayer} is the Winner!`);
+        return;
+      }
 
-    <div class="floral-border-bottom-left"></div>
-    <div class="floral-border-bottom-right"></div>
+      if (!board.includes("")) {
+        endGame("It's a Draw!");
+        return;
+      }
 
-    <!-- Modal for custom name input -->
-    <div id="shareModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">×</span>
-            <h3>शेयर करें / Share Card</h3>
-            <p>यह कार्ड <strong id="modalSenderName"></strong> की तरफ से है।</p>
-            <label for="recipientName">भेजने वाले का नाम (Recipient's Name - for personalized message):</label>
-            <input type="text" id="recipientName" placeholder="जैसे: दोस्त, Ali, Priya">
-            <button id="confirmShareButton">संदेश भेजें / Send Message</button>
-            <p class="share-note">नोट: यह आपके डिफ़ॉल्ट शेयरिंग ऐप (जैसे व्हाट्सएप) के माध्यम से एक संदेश उत्पन्न करेगा।</p>
-        </div>
-    </div>
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
 
-    <script src="script.js"></script>
+      if (mode === "computer" && currentPlayer === "O") {
+        setTimeout(computerMove, 500);
+      }
+    }
+
+    function computerMove() {
+      let emptyIndices = board.map((val, i) => val === "" ? i : null).filter(i => i !== null);
+      let move = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      const cells = document.querySelectorAll(".cell");
+      board[move] = "O";
+      cells[move].textContent = "O";
+      cells[move].classList.add("o");
+
+      if (checkWinner("O")) {
+        endGame("O is the Winner!");
+        return;
+      }
+
+      if (!board.includes("")) {
+        endGame("It's a Draw!");
+        return;
+      }
+
+      currentPlayer = "X";
+    }
+
+    function checkWinner(player) {
+      const winPatterns = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return winPatterns.some(pattern =>
+        pattern.every(index => board[index] === player)
+      );
+    }
+
+    function endGame(message) {
+      isGameOver = true;
+      document.getElementById("result").textContent = message;
+      document.getElementById("result").style.display = "block";
+      document.getElementById("restart-btn").style.display = "inline-block";
+    }
+
+    function restartGame() {
+      createBoard();
+    }
+  </script>
+
+
+  <!-- Fixed Bottom Ad -->
+  <div id="mobile-ad" style="position: fixed; bottom: 0; left: 0; right: 0; text-align: center; z-index: 999;">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'e89815a8fd3961059ea05d65192dd54c',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/e89815a8fd3961059ea05d65192dd54c/invoke.js"></script>
+  </div>
 </body>
 </html>
