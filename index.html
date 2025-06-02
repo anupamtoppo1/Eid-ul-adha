@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid ul Adha Mubarak!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@700&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="floral-border-top-left"></div>
+    <div class="floral-border-top-right"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="user-name-3d" id="headerUserName">ANUPAM TOPPO</h1>
+            <h2 class="hindi-subheading"><span id="subheadingUserName">अनूपम टोप्पो</span> की तरफ से आप को ईद उल अजहा की बहुत बहुत शुभकामनाएँ</h2>
+        </header>
+
+        <section class="date-section">
+            <p><strong>आज की तारीख 👉 <span id="currentDate"></span></strong></p>
+        </section>
+
+        <main>
+            <div class="eid-gif-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2t1dDRiYjV2MXZ1bHUxZ2NnNmNkbjBnMnc3OHQ0NXFsdGhzcG1sayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LStqRxbS07T3sfIccP/giphy.gif" alt="Eid Mubarak Animation" class="eid-gif">
+            </div>
+
+            <div class="greeting-card">
+                <div class="greeting-content">
+                    <p class="eid-greeting-main">🌙 ईद मुबारक!</p>
+                    <p class="eid-message">अल्लाह आपके जीवन को खुशियों और अमन से भर दे।</p>
+                    <p class="eid-signature">— <span id="signatureUserName">अनूपम टोप्पो</span></p>
+                </div>
+            </div>
+
+            <section class="cta-section">
+                <p class="hindi-cta">आपका दिन मुबारक हो 😊</p>
+            </section>
+        </main> <!-- End of main content -->
+
+        <!-- Adsterra Ad Slot START -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '639ddb0c9a01414b330a9b9e2f04adb1',
+                    'format' : 'iframe',
+                    'height' : 600,
+                    'width' : 160,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/639ddb0c9a01414b330a9b9e2f04adb1/invoke.js"></script>
+        </div>
+        <!-- Adsterra Ad Slot END -->
+
+        <footer>
+            <div class="music-player">
+                <audio id="eidMusic" loop>
+                    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_155b362998.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <button id="musicToggleBtn"><i class="fas fa-play"></i></button>
+                <span>Soft Spiritual Instrumental</span>
+            </div>
+
+            <button id="shareButton" class="share-button">शेयर करें / Send</button>
+        </footer>
+    </div>
+
+    <div class="floral-border-bottom-left"></div>
+    <div class="floral-border-bottom-right"></div>
+
+    <!-- Modal for custom name input -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3>शेयर करें / Share Card</h3>
+            <p>यह कार्ड <strong id="modalSenderName"></strong> की तरफ से है।</p>
+            <label for="recipientName">भेजने वाले का नाम (Recipient's Name - for personalized message):</label>
+            <input type="text" id="recipientName" placeholder="जैसे: दोस्त, Ali, Priya">
+            <button id="confirmShareButton">संदेश भेजें / Send Message</button>
+            <p class="share-note">नोट: यह आपके डिफ़ॉल्ट शेयरिंग ऐप (जैसे व्हाट्सएप) के माध्यम से एक संदेश उत्पन्न करेगा।</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

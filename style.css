@@ -1,0 +1,33 @@
+/* ... (all your existing CSS code above) ... */
+
+/* Call to Action */
+.cta-section .hindi-cta {
+    font-family: var(--hindi-font);
+    font-size: 1.4em; /* Responsive */
+    font-weight: bold;
+    color: var(--text-light);
+    margin-top: 20px;
+    /* Add margin-bottom if ad is directly below */
+    margin-bottom: 20px; 
+}
+
+/* Ad Container Styling */
+.ad-container {
+    margin: 20px auto; /* Centers the container if its width is fixed */
+    width: 160px;      /* Matches the ad width specified in the script */
+    height: 600px;     /* Matches the ad height specified in the script */
+    /* You can add a border for testing if the ad doesn't load immediately */
+    /* border: 1px dashed #ccc; */
+    /* Ensure it doesn't overflow if ad content is strange, though iframe usually handles this */
+    overflow: hidden; 
+}
+
+
+/* Footer & Controls */
+footer {
+    margin-top: 20px; /* Or adjust if ad container has enough margin-bottom */
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 215, 0, 0.5); /* Gold separator */
+}
+
+/* ... (rest of your CSS code) ... */
