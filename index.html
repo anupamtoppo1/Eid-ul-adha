@@ -34,19 +34,40 @@
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
+        .ad-container {
+            width: 100%;
+            max-width: 468px; /* Max width of the ad unit */
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-bottom: 15px; /* Space below top ad */
+            margin-top: 15px; /* Space above bottom ad */
+        }
+        
+        .ad-container-top {
+            margin-bottom: 20px;
+        }
+
+        .ad-container-bottom {
+            margin-top: 20px;
+        }
+
+
         .container {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* For Safari */
             border-radius: 20px;
             padding: 25px;
-            margin-top: 20px;
+            /* margin-top: 20px; Removed to let ad spacing control */
             width: 100%;
             max-width: 500px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             border: 1px solid var(--glass-border);
             text-align: center;
             animation: fadeInContainer 1s ease-out forwards;
+            z-index: 10; /* Ensure content is above potential full-width ad backgrounds */
+            position: relative; /* For z-index to work */
         }
 
         @keyframes fadeInContainer {
@@ -181,6 +202,7 @@
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             border: 1px solid var(--glass-border);
+            z-index: 100; /* Ensure audio controls are on top */
         }
 
         .audio-controls button {
@@ -240,7 +262,7 @@
             }
             .container {
                 padding: 20px;
-                margin-top: 10px;
+                /* margin-top: 10px; */ /* Adjusted by ad spacing */
             }
             .audio-controls {
                 bottom: 10px;
@@ -250,10 +272,30 @@
             .audio-controls input[type="range"] {
                 width: 60px;
             }
+             .ad-container {
+                /* Ensure ad container doesn't cause overflow on small screens if ad is not responsive */
+                /* Adsterra should handle responsive ads, but this is a fallback for the container */
+                max-width: 100%; 
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Adsterra Ad Start - Top -->
+    <div class="ad-container ad-container-top">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'd94bd149c1d4daea74c97de0ae2c697d',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/d94bd149c1d4daea74c97de0ae2c697d/invoke.js"></script>
+    </div>
+    <!-- Adsterra Ad End - Top -->
 
     <div class="container">
         <img src="eid.gif" alt="Eid Greetings Animation" class="eid-gif">
@@ -279,6 +321,21 @@
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
     </div>
 
+    <!-- Adsterra Ad Start - Bottom -->
+    <div class="ad-container ad-container-bottom">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'd94bd149c1d4daea74c97de0ae2c697d', // Using the same key as the top ad
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/d94bd149c1d4daea74c97de0ae2c697d/invoke.js"></script>
+    </div>
+    <!-- Adsterra Ad End - Bottom -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const nameInput = document.getElementById('nameInput');
@@ -290,25 +347,17 @@
             const volumeSlider = document.getElementById('volumeSlider');
             const muteIcon = muteButton.querySelector('i');
 
-            let generatedMessage = ""; // To store the generated message for sharing
+            let generatedMessage = ""; 
 
-            // Try to play audio, handle potential browser restrictions
-            bgMusic.volume = 0.5; // Set initial volume
+            bgMusic.volume = 0.5; 
             volumeSlider.value = 0.5;
 
-            // Attempt to play music. Browsers might block autoplay with sound.
-            // The `autoplay` attribute on the <audio> tag is the primary request.
-            // This JS play is a secondary attempt, often requiring prior user interaction.
             const playPromise = bgMusic.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    // Autoplay started!
                     updateMuteIcon();
                 }).catch(error => {
-                    // Autoplay was prevented.
                     console.warn("Audio autoplay prevented by browser:", error);
-                    // Optionally, show a "Click to play" button or rely on user to use controls.
-                    // Ensure icon reflects muted state if autoplay fails and audio is paused.
                     updateMuteIcon(); 
                 });
             }
@@ -317,13 +366,13 @@
             generateButton.addEventListener('click', () => {
                 let userName = nameInput.value.trim();
                 if (userName === "") {
-                    userName = "a friend"; // Default if no name is entered
+                    userName = "a friend"; 
                 }
                 
                 generatedMessage = `Eid Mubarak from ${userName}! 🎉 Wishing you happiness and blessings!`;
                 customGreetingP.textContent = generatedMessage;
-                customGreetingP.style.display = 'block'; // Show the paragraph
-                whatsappButton.style.display = 'inline-block'; // Show WhatsApp button
+                customGreetingP.style.display = 'block'; 
+                whatsappButton.style.display = 'inline-block'; 
             });
 
             whatsappButton.addEventListener('click', () => {
@@ -337,7 +386,6 @@
                 }
             });
 
-            // Audio Controls
             function updateMuteIcon() {
                 if (bgMusic.muted || bgMusic.volume === 0) {
                     muteIcon.classList.remove('fa-volume-up');
@@ -361,14 +409,10 @@
                 updateMuteIcon();
             });
 
-            // Update icon if volume changes to 0 via slider
             bgMusic.addEventListener('volumechange', updateMuteIcon);
-
-             // Initial icon state based on audio properties
             updateMuteIcon();
-
         });
     </script>
 
 </body>
-  </html>
+</html>
