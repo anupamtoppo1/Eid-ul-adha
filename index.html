@@ -1,256 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tic Tac Toe</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-      color: #333;
-    }
-    h1 {
-      margin: 20px 0;
-      color: #444;
-      text-shadow: 1px 1px #fff;
-    }
-    .mode-select {
-      margin: 20px 0;
-    }
-    .mode-select button {
-      margin: 10px;
-      padding: 12px 25px;
-      font-size: 18px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      background-color: #6a11cb;
-      background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
-      color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s;
-    }
-    .mode-select button:hover {
-      transform: scale(1.05);
-    }
-    #start-btn {
-      position: fixed;
-      bottom: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 14px 35px;
-      font-size: 20px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      display: none;
-      cursor: pointer;
-      z-index: 10000;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    #board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-gap: 10px;
-      justify-content: center;
-      margin: 40px auto;
-      display: none;
-    }
-    .cell {
-      width: 100px;
-      height: 100px;
-      background: #fff3cd;
-      font-size: 40px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 3px solid #ffc107;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .cell:hover {
-      background-color: #ffe8a1;
-    }
-    .cell.x {
-      color: #007bff;
-    }
-    .cell.o {
-      color: #dc3545;
-    }
-    .result {
-      font-size: 26px;
-      font-weight: bold;
-      margin-top: 20px;
-      background: #17a2b8;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      display: none;
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #restart-btn {
-      margin-top: 20px;
-      padding: 10px 25px;
-      font-size: 18px;
-      background: #6610f2;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      display: none;
-      cursor: pointer;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    }
-    @media (max-width: 400px) {
-      #board {
-        grid-template-columns: repeat(3, 80px);
-      }
-      .cell {
-        width: 80px;
-        height: 80px;
-        font-size: 30px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak!</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap');
+
+        :root {
+            --primary-color: #00c6ff;
+            --secondary-color: #0072ff;
+            --accent-color: #f7b733;
+            --text-color: #ffffff;
+            --bg-color-start: #1f2041; /* Deep indigo */
+            --bg-color-end: #4b0082; /* Darker purple */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            animation: fadeInContainer 1s ease-out forwards;
+        }
+
+        @keyframes fadeInContainer {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .eid-gif {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .festive-greeting {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, var(--accent-color), #fc4a1a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(247, 183, 51, 0.5), 0 0 20px rgba(252, 74, 26, 0.3);
+            animation: fadeInText 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        #nameInput {
+            width: calc(100% - 40px);
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-color);
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        #nameInput::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #nameInput:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(247, 183, 51, 0.5);
+        }
+
+        .action-button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-color);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: 2px solid transparent;
+            margin: 10px 5px;
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+            animation: pulseButton 2s infinite;
+        }
+
+        .action-button:hover, .action-button:focus {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 198, 255, 0.5);
+            animation-play-state: paused; /* Pause pulse on hover */
+        }
+        
+        @keyframes pulseButton {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(45deg, #25D366, #128C7E); /* WhatsApp colors */
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-button:hover, .whatsapp-button:focus {
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-button i {
+            margin-right: 8px;
+        }
+
+        #customGreeting {
+            margin-top: 25px;
+            font-size: 1.3em;
+            line-height: 1.6;
+            min-height: 50px; /* Reserve space */
+            color: #f0f0f0;
+            font-weight: 400;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.1);
+            display: none; /* Hidden initially */
+            animation: popInMessage 0.5s ease-out forwards;
+        }
+
+        @keyframes popInMessage {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .audio-controls {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+        }
+
+        .audio-controls button {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            margin-right: 8px;
+            transition: color 0.3s ease;
+        }
+        .audio-controls button:hover {
+            color: var(--accent-color);
+        }
+
+        .audio-controls input[type="range"] {
+            width: 80px;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .audio-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .audio-controls input[type="range"]::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .festive-greeting {
+                font-size: 1.8em;
+            }
+            #nameInput, .action-button {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+            #customGreeting {
+                font-size: 1.1em;
+            }
+            .container {
+                padding: 20px;
+                margin-top: 10px;
+            }
+            .audio-controls {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+            .audio-controls input[type="range"] {
+                width: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Tic Tac Toe</h1>
-  <div class="mode-select">
-    <button onclick="selectMode('friend')">Play with Friend</button>
-    <button onclick="selectMode('computer')">Play with Computer</button>
-  </div>
-  <button id="start-btn" onclick="startGame()">Start Game</button>
-  <div id="board"></div>
-  <div class="result" id="result"></div>
-  <button id="restart-btn" onclick="restartGame()">Restart</button>
 
-  <script>
-    let currentPlayer = "X";
-    let board = ["", "", "", "", "", "", "", "", ""];
-    let mode = "";
-    let isGameOver = false;
+    <div class="container">
+        <img src="eid.gif" alt="Eid Greetings Animation" class="eid-gif">
 
-    function selectMode(selectedMode) {
-      mode = selectedMode;
-      document.getElementById("start-btn").style.display = "block";
-    }
+        <h1 class="festive-greeting">✨ Eid Mubarak! May this Eid bring joy, peace, and prosperity to all! ✨</h1>
 
-    function startGame() {
-      document.getElementById("board").style.display = "grid";
-      document.getElementById("start-btn").style.display = "none";
-      document.querySelector(".mode-select").style.display = "none";
- 
-      createBoard();
-    }
+        <input type="text" id="nameInput" placeholder="Enter your name (optional)">
 
-    function createBoard() {
-      const boardDiv = document.getElementById("board");
-      boardDiv.innerHTML = "";
-      board = ["", "", "", "", "", "", "", "", ""];
-      isGameOver = false;
-      currentPlayer = "X";
-      document.getElementById("result").style.display = "none";
-      document.getElementById("restart-btn").style.display = "none";
+        <button id="generateButton" class="action-button">
+            Generate Eid Wish
+        </button>
 
-      board.forEach((_, i) => {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.dataset.index = i;
-        cell.addEventListener("click", handleCellClick);
-        boardDiv.appendChild(cell);
-      });
-    }
+        <p id="customGreeting"></p>
 
-    function handleCellClick(e) {
-      const index = e.target.dataset.index;
-      if (board[index] !== "" || isGameOver) return;
+        <button id="whatsappButton" class="action-button whatsapp-button" style="display: none;">
+            <i class="fab fa-whatsapp"></i> Share on WhatsApp
+        </button>
+    </div>
 
-      board[index] = currentPlayer;
-      e.target.textContent = currentPlayer;
-      e.target.classList.add(currentPlayer.toLowerCase());
+    <div class="audio-controls">
+        <audio id="bgMusic" src="song.mp3" loop autoplay></audio>
+        <button id="muteButton"><i class="fas fa-volume-up"></i></button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+    </div>
 
-      if (checkWinner(currentPlayer)) {
-        endGame(`${currentPlayer} is the Winner!`);
-        return;
-      }
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('nameInput');
+            const generateButton = document.getElementById('generateButton');
+            const customGreetingP = document.getElementById('customGreeting');
+            const whatsappButton = document.getElementById('whatsappButton');
+            const bgMusic = document.getElementById('bgMusic');
+            const muteButton = document.getElementById('muteButton');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const muteIcon = muteButton.querySelector('i');
 
-      if (!board.includes("")) {
-        endGame("It's a Draw!");
-        return;
-      }
+            let generatedMessage = ""; // To store the generated message for sharing
 
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
+            // Try to play audio, handle potential browser restrictions
+            bgMusic.volume = 0.5; // Set initial volume
+            volumeSlider.value = 0.5;
 
-      if (mode === "computer" && currentPlayer === "O") {
-        setTimeout(computerMove, 500);
-      }
-    }
-
-    function computerMove() {
-      let emptyIndices = board.map((val, i) => val === "" ? i : null).filter(i => i !== null);
-      let move = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-      const cells = document.querySelectorAll(".cell");
-      board[move] = "O";
-      cells[move].textContent = "O";
-      cells[move].classList.add("o");
-
-      if (checkWinner("O")) {
-        endGame("O is the Winner!");
-        return;
-      }
-
-      if (!board.includes("")) {
-        endGame("It's a Draw!");
-        return;
-      }
-
-      currentPlayer = "X";
-    }
-
-    function checkWinner(player) {
-      const winPatterns = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
-      return winPatterns.some(pattern =>
-        pattern.every(index => board[index] === player)
-      );
-    }
-
-    function endGame(message) {
-      isGameOver = true;
-      document.getElementById("result").textContent = message;
-      document.getElementById("result").style.display = "block";
-      document.getElementById("restart-btn").style.display = "inline-block";
-    }
-
-    function restartGame() {
-      createBoard();
-    }
-  </script>
+            // Attempt to play music. Browsers might block autoplay with sound.
+            // The `autoplay` attribute on the <audio> tag is the primary request.
+            // This JS play is a secondary attempt, often requiring prior user interaction.
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay started!
+                    updateMuteIcon();
+                }).catch(error => {
+                    // Autoplay was prevented.
+                    console.warn("Audio autoplay prevented by browser:", error);
+                    // Optionally, show a "Click to play" button or rely on user to use controls.
+                    // Ensure icon reflects muted state if autoplay fails and audio is paused.
+                    updateMuteIcon(); 
+                });
+            }
 
 
-  <!-- Fixed Bottom Ad -->
-  <div id="mobile-ad" style="position: fixed; bottom: 0; left: 0; right: 0; text-align: center; z-index: 999;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'e89815a8fd3961059ea05d65192dd54c',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/e89815a8fd3961059ea05d65192dd54c/invoke.js"></script>
-  </div>
+            generateButton.addEventListener('click', () => {
+                let userName = nameInput.value.trim();
+                if (userName === "") {
+                    userName = "a friend"; // Default if no name is entered
+                }
+                
+                generatedMessage = `Eid Mubarak from ${userName}! 🎉 Wishing you happiness and blessings!`;
+                customGreetingP.textContent = generatedMessage;
+                customGreetingP.style.display = 'block'; // Show the paragraph
+                whatsappButton.style.display = 'inline-block'; // Show WhatsApp button
+            });
+
+            whatsappButton.addEventListener('click', () => {
+                if (generatedMessage) {
+                    const siteUrl = window.location.href;
+                    const whatsappText = `${generatedMessage}\n\nSent from this Eid Greeting page:\n${siteUrl}`;
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappText)}`;
+                    window.open(whatsappUrl, '_blank');
+                } else {
+                    alert("Please generate a wish first!");
+                }
+            });
+
+            // Audio Controls
+            function updateMuteIcon() {
+                if (bgMusic.muted || bgMusic.volume === 0) {
+                    muteIcon.classList.remove('fa-volume-up');
+                    muteIcon.classList.add('fa-volume-mute');
+                } else {
+                    muteIcon.classList.remove('fa-volume-mute');
+                    muteIcon.classList.add('fa-volume-up');
+                }
+            }
+            
+            muteButton.addEventListener('click', () => {
+                bgMusic.muted = !bgMusic.muted;
+                updateMuteIcon();
+            });
+
+            volumeSlider.addEventListener('input', () => {
+                bgMusic.volume = parseFloat(volumeSlider.value);
+                if (bgMusic.volume > 0) {
+                    bgMusic.muted = false;
+                }
+                updateMuteIcon();
+            });
+
+            // Update icon if volume changes to 0 via slider
+            bgMusic.addEventListener('volumechange', updateMuteIcon);
+
+             // Initial icon state based on audio properties
+            updateMuteIcon();
+
+        });
+    </script>
+
 </body>
-</html>
+  </html>
